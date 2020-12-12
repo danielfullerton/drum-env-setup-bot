@@ -4,7 +4,8 @@ import (
 	"drum-env-setup-bot/pkg/terminal"
 	"fmt"
 	"github.com/go-vgo/robotgo"
-	"os"
+	"log"
+	"os/exec"
 	"strings"
 )
 
@@ -17,35 +18,35 @@ func WriteText(text string) {
 	}
 }
 
-func QuitAllApps() {
-	if os.Getenv("SKIP_QUIT_ALL_APPS") == "" {
-		terminal.OpenApplication(os.Getenv("QUIT_ALL_APP_NAME"))
+func QuitAllApps(appName string) {
+	OpenApp(appName, 10)
+}
+
+func SetAudioVolume(value string) {
+	if value != "" {
+		volStr := fmt.Sprintf("set Volume %s", value)
+		terminal.SneakyRun("osascript", "-e", volStr)
 	}
 }
 
-func SetAudioVolume() {
-	if os.Getenv("SKIP_SET_VOLUME") == "" {
-		vol := os.Getenv("VOLUME_LEVEL")
-		volStr := fmt.Sprintf("set Volume %s", vol)
-		terminal.Run("osascript", "-e", volStr)
+func SetAudioDevice(value string) {
+	if value != "" {
+		cmd := exec.Command("switchaudiosource", "-s", value)
+		err := cmd.Run()
+		if err != nil {
+			log.Fatal("ERROR: Your audio device may not have been found, failed to change audio devices; aborting")
+		}
 	}
 }
 
-func SetAudioDevice() {
-	if os.Getenv("SKIP_SET_AUDIO_DEVICE") == "" {
-		soundDevice := os.Getenv("SOUND_DEVICE_NAME")
-		terminal.Run("switchaudiosource", "-s", soundDevice)
-	}
-}
-
-func openMidiPipeMidiFile() {
+func openMidiPipeMidiFile(pathToMidiFile string) {
 	robotgo.KeyTap("o", "cmd")
 	robotgo.Sleep(1)
 
 	robotgo.KeyTap("g", "cmd", "shift")
 	robotgo.Sleep(1)
 
-	WriteText(os.Getenv("ABS_PATH_TO_MIDIPIPE_MIDI_FILE"))
+	WriteText(pathToMidiFile)
 	robotgo.Sleep(1)
 
 	robotgo.KeyTap("enter")
@@ -57,32 +58,31 @@ func openMidiPipeMidiFile() {
 	robotgo.KeyTap("enter")
 }
 
-func OpenMidiPipe() {
-	if os.Getenv("SKIP_MIDI_PIPE") == "" {
-		terminal.OpenApplication(os.Getenv("MIDIPIPE_APP_NAME"))
-		robotgo.Sleep(5)
+func OpenMidiPipe(appName, pathToMidiFile string) {
+	if appName != "" {
+		OpenApp(appName, 5)
 
-		if os.Getenv("SKIP_MIDI_PIPE_FILE") == "" {
-			openMidiPipeMidiFile()
+		if pathToMidiFile != "" {
+			openMidiPipeMidiFile(pathToMidiFile)
 		}
 	}
 }
 
-func OpenGarageBand() {
-	if os.Getenv("SKIP_GARAGE_BAND") == "" {
-		terminal.OpenApplication(os.Getenv("GARAGEBAND_APP_NAME"))
-		robotgo.Sleep(10)
+func OpenApp(appName string, sleepSeconds int) {
+	if appName != "" {
+		terminal.OpenApplication(appName)
+		robotgo.Sleep(sleepSeconds)
 	}
 }
 
-func OpenOBS() {
-	if os.Getenv("SKIP_OBS") == "" {
-		terminal.OpenApplication(os.Getenv("OBS_APP_NAME"))
-	}
+func OpenGarageBand(appName string) {
+	OpenApp(appName, 5)
 }
 
-func OpenSpotify() {
-	if os.Getenv("SKIP_SPOTIFY") == "" {
-		terminal.OpenApplication(os.Getenv("SPOTIFY_APP_NAME"))
-	}
+func OpenOBS(appName string) {
+	OpenApp(appName, 0)
+}
+
+func OpenSpotify(appName string) {
+	OpenApp(appName, 0)
 }

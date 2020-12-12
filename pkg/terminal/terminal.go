@@ -5,7 +5,7 @@ import (
 	"os/exec"
 )
 
-func Run(command string, args ...string) {
+func SneakyRun(command string, args ...string) {
 	cmd := exec.Command(command, args...)
 	if err := cmd.Run(); err != nil {
 		fmt.Println(err)
@@ -13,5 +13,5 @@ func Run(command string, args ...string) {
 }
 
 func OpenApplication(appName string) {
-	Run("open", "-a", appName)
+	SneakyRun("open", "-a", appName)
 }
