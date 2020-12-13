@@ -86,3 +86,14 @@ func OpenOBS(appName string) {
 func OpenSpotify(appName string) {
 	OpenApp(appName, 0)
 }
+
+func OpenStreamManagerChrome(appName, twitchStreamManagerUrl string) {
+	if appName != "" {
+		OpenApp(appName, 3)
+
+		if twitchStreamManagerUrl != "" {
+			robotgo.TypeStr(twitchStreamManagerUrl)
+			robotgo.KeyTap("enter")
+		}
+	}
+}

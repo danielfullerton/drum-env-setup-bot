@@ -19,6 +19,9 @@ func Setup(cmd *cobra.Command, args []string) {
 	// MidiPipe
 	bot.OpenMidiPipe(cmd.Flag(constants.MidiPipeAppName).Value.String(), cmd.Flag(constants.AbsPathToMidiPipeMidiFile).Value.String())
 
+	// Twitch Stream Manager
+	bot.OpenStreamManagerChrome(cmd.Flag(constants.GoogleChromeAppName).Value.String(), cmd.Flag(constants.TwitchStreamManagerUrl).Value.String())
+
 	// GarageBand
 	bot.OpenGarageBand(cmd.Flag(constants.GarageBandAppName).Value.String())
 
@@ -27,4 +30,6 @@ func Setup(cmd *cobra.Command, args []string) {
 
 	// Spotify
 	bot.OpenSpotify(cmd.Flag(constants.SpotifyAppName).Value.String())
+
+
 }

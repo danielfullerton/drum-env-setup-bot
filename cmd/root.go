@@ -16,6 +16,8 @@ var garageBandAppName string
 var obsAppName string
 var spotifyAppName string
 var pathToSwitchAudioSource string
+var googleChromeAppName string
+var twitchStreamManagerUrl string
 
 var rootCmd = &cobra.Command{
 	Use: "drum-env-setup",
@@ -36,6 +38,8 @@ func setupFlags() {
 	rootCmd.Flags().StringVarP(&obsAppName, constants.ObsAppName, "o", "OBS", "The name of your OBS app")
 	rootCmd.Flags().StringVarP(&spotifyAppName, constants.SpotifyAppName, "s", "Spotify", "The name of your Spotify app")
 	rootCmd.Flags().StringVarP(&pathToSwitchAudioSource, constants.PathToSwitchAudioSource, "a", "switchaudiosource", "Path to binary that executes the switchaudiosource command")
+	rootCmd.Flags().StringVarP(&googleChromeAppName, constants.GoogleChromeAppName, "c", "Google Chrome", "The name of your Google Chrome application - this is used to open Chrome and navigate to the Twitch Stream Manager page")
+	rootCmd.Flags().StringVarP(&twitchStreamManagerUrl, constants.TwitchStreamManagerUrl, "t", "", "The URL of your Twitch stream manager page")
 }
 
 func Execute() {

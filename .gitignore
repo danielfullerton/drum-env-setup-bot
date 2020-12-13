@@ -2,3 +2,5 @@
 /vendor
 .env
 drum-env-setup-bot
+drum-env-setup-bot.iml
+/scripts
