@@ -15,6 +15,7 @@ var absPathToMidiPipeMidiFile string
 var garageBandAppName string
 var obsAppName string
 var spotifyAppName string
+var pathToSwitchAudioSource string
 
 var rootCmd = &cobra.Command{
 	Use: "drum-env-setup",
@@ -34,6 +35,7 @@ func setupFlags() {
 	rootCmd.Flags().StringVarP(&garageBandAppName, constants.GarageBandAppName, "g", "GarageBand", "The name of your GarageBand app")
 	rootCmd.Flags().StringVarP(&obsAppName, constants.ObsAppName, "o", "OBS", "The name of your OBS app")
 	rootCmd.Flags().StringVarP(&spotifyAppName, constants.SpotifyAppName, "s", "Spotify", "The name of your Spotify app")
+	rootCmd.Flags().StringVarP(&pathToSwitchAudioSource, constants.PathToSwitchAudioSource, "a", "switchaudiosource", "Path to binary that executes the switchaudiosource command")
 }
 
 func Execute() {

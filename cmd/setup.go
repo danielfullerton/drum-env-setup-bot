@@ -13,7 +13,7 @@ func Setup(cmd *cobra.Command, args []string) {
 
 	// Audio Setup
 	bot.SetAudioVolume(cmd.Flag(constants.VolumeLevel).Value.String())
-	bot.SetAudioDevice(cmd.Flag(constants.SoundDeviceName).Value.String())
+	bot.SetAudioDevice(cmd.Flag(constants.PathToSwitchAudioSource).Value.String(), cmd.Flag(constants.SoundDeviceName).Value.String())
 
 	fmt.Println("ran")
 	// MidiPipe

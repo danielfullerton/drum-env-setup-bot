@@ -29,9 +29,9 @@ func SetAudioVolume(value string) {
 	}
 }
 
-func SetAudioDevice(value string) {
+func SetAudioDevice(pathToSwitchAudioSource, value string) {
 	if value != "" {
-		cmd := exec.Command("switchaudiosource", "-s", value)
+		cmd := exec.Command(pathToSwitchAudioSource, "-s", value)
 		err := cmd.Run()
 		if err != nil {
 			log.Fatal("ERROR: Your audio device may not have been found, failed to change audio devices; aborting")
